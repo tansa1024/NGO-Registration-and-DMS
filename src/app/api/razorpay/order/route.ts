@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import razorpay from '@/lib/razorpay';
+import Razorpay from 'razorpay'; // Import the SDK directly
 import { getSession } from '@/lib/auth';
 import { run } from '@/lib/db';
 
@@ -9,20 +9,24 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // SAFE INITIALIZATION: Create the client INSIDE the function
+    const razorpayInstance = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID!,
+        key_secret: process.env.RAZORPAY_KEY_SECRET!,
+    });
+
     try {
         const { amount } = await request.json();
 
-        // Create an order in Razorpay
-        // Amount must be in "paise" (multiply by 100)
         const options = {
             amount: Math.round(amount * 100),
             currency: "INR",
             receipt: `receipt_${Date.now()}`,
         };
 
-        const order = await razorpay.orders.create(options);
+        // Use the instance created inside the function
+        const order = await razorpayInstance.orders.create(options);
 
-        // Create a local pending record linked to this order
         await run(
             'INSERT INTO donations (user_id, amount, status, payment_id) VALUES (?, ?, ?, ?)',
             [session.id, amount, 'pending', order.id]
