@@ -40,10 +40,9 @@ Non-governmental organisations often run online campaigns where individuals regi
    
    Create a `.env.local` file in the root directory:
    ```env
-   JWT_SECRET=your_super_secret_jwt_key_here
-   RAZORPAY_KEY_ID=your_razorpay_key_id
-   RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-   ADMIN_SECRET=your_admin_secret_for_registration
+   JWT_SECRET=super-secret-key-change-me
+   RAZORPAY_KEY_ID=rzp_test_S3SGdUFoKb8CaM
+   RAZORPAY_KEY_SECRET=TiKRFj5hSQiCPwlywVOjYSbD
    ```
 
 4. **Run the development server**
@@ -56,7 +55,7 @@ Non-governmental organisations often run online campaigns where individuals regi
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## Environment Variables
-CSV File containing api keys is also uploaded.
+A CSV File containing API keys has also been uploaded.
 
 | Variable | Description |
 |----------|-------------|
@@ -107,15 +106,6 @@ ngo-system/
 2. View registrations and donations
 3. Use search and filter options
 4. Export data as CSV
-
-## Security Features
-
-- Password hashing with bcrypt
-- JWT-based session management
-- HTTP-only secure cookies
-- Razorpay signature verification
-- Role-based access control
-- Protected API routes
 
 ## 📝 API Endpoints
 
