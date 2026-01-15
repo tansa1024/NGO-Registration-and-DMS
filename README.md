@@ -1,10 +1,8 @@
 # Unnati - NGO Registration and Donation Management System
 
-A modern, full-stack NGO platform built with Next.js that enables secure user registration, donation management, and administrative oversight.
+Non-governmental organisations often run online campaigns where individuals register to support a cause and may choose to donate. In many cases, user data is lost if a donation is not completed, and administrators lack clear visibility into registrations and donations. This project focuses on building a backend-driven system that separates user registration from donation flow, ensuring data integrity, transparency, and ethical handling of payments.
 
-![Unnati](https://img.shields.io/badge/Unnati-For%20a%20Better%20Tomorrow-orange)
-
-## 🌟 Features
+## Features
 
 ### For Users
 - **Secure Registration & Login** - JWT-based authentication with password hashing
@@ -18,25 +16,14 @@ A modern, full-stack NGO platform built with Next.js that enables secure user re
 - **Donation Management** - Track all transactions with status filtering
 - **Export Functionality** - Download data as CSV for reporting
 
-## 🎨 Design System
-
-The application features an **Indian-themed light mode** design with:
-- **Saffron Orange** (#FF9933) - Primary accent color
-- **India Green** (#138808) - Secondary accent color
-- Modern typography with Inter font
-- Responsive layouts with mobile-first approach
-- Smooth animations and micro-interactions
-
-## 🛠️ Tech Stack
-
+## Tech Stack
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Database**: SQLite
 - **Authentication**: JWT with HTTP-only cookies
 - **Payments**: Razorpay Integration
-- **Styling**: Custom CSS with design tokens
-
-## 📦 Installation
+- 
+## Installation
 
 1. **Clone the repository**
    ```bash
@@ -68,16 +55,17 @@ The application features an **Indian-themed light mode** design with:
    
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 🔐 Environment Variables
+## Environment Variables
+CSV File containing api keys is also uploaded.
 
 | Variable | Description |
 |----------|-------------|
-| `JWT_SECRET` | Secret key for JWT token signing |
-| `RAZORPAY_KEY_ID` | Razorpay API Key ID |
-| `RAZORPAY_KEY_SECRET` | Razorpay API Key Secret |
-| `ADMIN_SECRET` | Secret code for admin registration |
+| `JWT_SECRET` | super-secret-key-change-me |
+| `RAZORPAY_KEY_ID` | rzp_test_S3SGdUFoKb8CaM |
+| `RAZORPAY_KEY_SECRET` | TiKRFj5hSQiCPwlywVOjYSbD |
+| `ADMIN_SECRET` | admin123 |
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ngo-system/
@@ -100,11 +88,11 @@ ngo-system/
 └── package.json
 ```
 
-## 🚀 Usage
+## Usage
 
 ### User Registration
 1. Navigate to `/login`
-2. Click on "Register" tab
+2. Click on the "Register" tab
 3. Fill in your details
 4. For admin access, select "Admin" role and enter the admin secret code
 
@@ -120,7 +108,7 @@ ngo-system/
 3. Use search and filter options
 4. Export data as CSV
 
-## 🔒 Security Features
+## Security Features
 
 - Password hashing with bcrypt
 - JWT-based session management
@@ -142,18 +130,3 @@ ngo-system/
 | GET | `/api/donations` | Get donations |
 | GET | `/api/admin/export` | Export data as CSV |
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 👨‍💻 Author
-
-Built with ❤️ for India
-
----
-
-**Unnati** - Empowering communities through transparent giving.
