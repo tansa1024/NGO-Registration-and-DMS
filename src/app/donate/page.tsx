@@ -21,7 +21,6 @@ export default function Donate() {
 
         setLoading(true);
         try {
-            // 1. Create Order
             const res = await fetch('/api/razorpay/order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -36,7 +35,6 @@ export default function Donate() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error);
 
-            // 2. Open Razorpay Checkout
             const options = {
                 key: data.keyId,
                 amount: data.amount,
@@ -45,7 +43,6 @@ export default function Donate() {
                 description: "Donation for a cause",
                 order_id: data.orderId,
                 handler: async function (response: any) {
-                    // 3. Verify Payment
                     const verifyRes = await fetch('/api/razorpay/verify', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -58,18 +55,18 @@ export default function Donate() {
 
                     if (verifyRes.ok) {
                         router.push('/dashboard/user');
-                        router.refresh(); // Ensure dashboard updates
+                        router.refresh();
                     } else {
                         alert('Payment verification failed');
                     }
                 },
                 prefill: {
-                    name: "Donor Name", // Could fill from session if available
+                    name: "Donor Name",
                     email: "donor@example.com",
                     contact: "9999999999"
                 },
                 theme: {
-                    color: "#6d28d9"
+                    color: "#FF9933"
                 }
             };
 
@@ -87,51 +84,86 @@ export default function Donate() {
         }
     };
 
-    return (
-        <div className="flex items-center justify-center p-4" style={{ minHeight: '80vh' }}>
-            <div className="card w-full max-w-md animate-fade-in text-center">
-                <h1 className="text-3xl font-bold mb-2">Make a Donation</h1>
-                <div className="mb-6 flex justify-center">
-                    <span className="badge badge-admin px-3 py-1">Razorpay Secured</span>
-                </div>
-                <p className="text-[var(--foreground)] opacity-70 mb-8">
-                    Your contribution helps us make a real difference.
-                </p>
+    const quickAmounts = [100, 500, 1000, 2000, 5000];
 
-                <form onSubmit={handleDonate} className="flex flex-col gap-6">
-                    <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-bold opacity-50">₹</span>
-                        <input
-                            type="number"
-                            min="1"
-                            required
-                            className="input pl-10 text-xl font-bold"
-                            placeholder="0"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                        />
+    return (
+        <div className="min-h-screen bg-surface py-20 px-4">
+            <div className="container max-w-md">
+                <div className="card card-elevated animate-fade-in text-center p-8">
+                    {/* Header */}
+                    <div className="logo-avatar mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
                     </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="btn btn-primary btn-block py-4 text-lg"
-                    >
-                        {loading ? 'Processing...' : 'Pay with Razorpay'}
-                    </button>
-                </form>
+                    <h1 className="text-2xl font-bold mb-2">Make a Donation</h1>
+                    <p className="text-secondary mb-8">
+                        Your contribution helps us make a real difference in communities across India.
+                    </p>
 
-                <div className="mt-6 flex flex-wrap gap-2 justify-center">
-                    {[100, 500, 1000, 2000].map(val => (
+                    {/* Amount Input */}
+                    <form onSubmit={handleDonate}>
+                        <div className="relative mb-6">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-secondary">₹</span>
+                            <input
+                                type="number"
+                                min="1"
+                                required
+                                className="input text-center text-3xl font-bold py-6 pl-12"
+                                placeholder="0"
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
+                            />
+                        </div>
+
+                        {/* Quick Amount Buttons */}
+                        <div className="flex flex-wrap gap-3 justify-center mb-8">
+                            {quickAmounts.map(val => (
+                                <button
+                                    key={val}
+                                    type="button"
+                                    onClick={() => setAmount(val.toString())}
+                                    className={`btn btn-sm ${amount === val.toString() ? 'btn-primary' : 'btn-secondary'}`}
+                                >
+                                    ₹{val.toLocaleString()}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Submit Button */}
                         <button
-                            key={val}
-                            type="button"
-                            onClick={() => setAmount(val.toString())}
-                            className="btn btn-secondary text-sm py-1 px-3"
+                            type="submit"
+                            disabled={loading || !amount}
+                            className="btn btn-primary btn-block btn-lg"
                         >
-                            ₹{val}
+                            {loading ? (
+                                <>
+                                    <svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <circle cx="12" cy="12" r="10" strokeOpacity="0.25"></circle>
+                                        <path d="M12 2a10 10 0 0 1 10 10" strokeOpacity="0.75"></path>
+                                    </svg>
+                                    Processing...
+                                </>
+                            ) : (
+                                <>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                                    </svg>
+                                    Pay with Razorpay
+                                </>
+                            )}
                         </button>
-                    ))}
+                    </form>
+
+                    {/* Security Badge */}
+                    <div className="mt-8 flex items-center justify-center gap-2 text-sm text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        Secured by Razorpay
+                    </div>
                 </div>
             </div>
         </div>

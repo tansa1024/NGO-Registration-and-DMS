@@ -9,13 +9,13 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // SAFE INITIALIZATION: Create the client INSIDE the function
-    const razorpayInstance = new Razorpay({
-        key_id: process.env.RAZORPAY_KEY_ID!,
-        key_secret: process.env.RAZORPAY_KEY_SECRET!,
-    });
-
     try {
+        // SAFE INITIALIZATION: Create the client INSIDE the function
+        const razorpayInstance = new Razorpay({
+            key_id: process.env.RAZORPAY_KEY_ID!,
+            key_secret: process.env.RAZORPAY_KEY_SECRET!,
+        });
+
         const { amount } = await request.json();
 
         const options = {

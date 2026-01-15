@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HopeConnect - Empowering Change",
-  description: "Join us in making a difference. Register and donate to support our causes.",
+  title: "Unnati - Empowering Communities",
+  description: "Empowering communities through transparent giving. Join our mission to create lasting change across India.",
 };
 
 export default function RootLayout({
@@ -18,10 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <main className="min-h-[calc(100vh-64px)]">
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );

@@ -21,31 +21,32 @@ export default function AdminControls() {
 
     const handleExport = () => {
         const params = new URLSearchParams(searchParams.toString());
-        // Trigger download
         window.open(`/api/admin/export?${params.toString()}`, '_blank');
     };
 
     return (
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-            <div className="flex bg-[var(--surface)] p-1 rounded-lg border border-[var(--border)]">
+        <div className="flex flex-col md-flex-row justify-between items-center gap-4 mb-6">
+            {/* Tabs */}
+            <div className="tabs">
                 <button
                     onClick={() => handleTab('registrations')}
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${tab === 'registrations' ? 'bg-[var(--primary)] text-white' : 'hover:bg-white/5'}`}
+                    className={`tab ${tab === 'registrations' ? 'active' : ''}`}
                 >
                     Registrations
                 </button>
                 <button
                     onClick={() => handleTab('donations')}
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${tab === 'donations' ? 'bg-[var(--primary)] text-white' : 'hover:bg-white/5'}`}
+                    className={`tab ${tab === 'donations' ? 'active' : ''}`}
                 >
                     Donations
                 </button>
             </div>
 
-            <div className="flex gap-2 w-full md:w-auto">
+            {/* Filters */}
+            <div className="flex gap-3 w-full md-w-auto flex-wrap">
                 <select
-                    className="input w-40"
-                    style={{ background: 'var(--surface)', color: 'var(--foreground)' }}
+                    className="select"
+                    style={{ width: 'auto', minWidth: '140px' }}
                     defaultValue={searchParams.get('filter') || 'all'}
                     onChange={(e) => {
                         const params = new URLSearchParams(searchParams.toString());
@@ -53,20 +54,28 @@ export default function AdminControls() {
                         router.push(`?${params.toString()}`);
                     }}
                 >
-                    <option value="all" className="bg-[var(--surface)] text-[var(--foreground)]">All Time</option>
-                    <option value="today" className="bg-[var(--surface)] text-[var(--foreground)]">Today</option>
-                    <option value="yesterday" className="bg-[var(--surface)] text-[var(--foreground)]">Yesterday</option>
-                    <option value="week" className="bg-[var(--surface)] text-[var(--foreground)]">Last 1 Week</option>
-                    <option value="month" className="bg-[var(--surface)] text-[var(--foreground)]">Last 1 Month</option>
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="yesterday">Yesterday</option>
+                    <option value="week">Last 7 Days</option>
+                    <option value="month">Last 30 Days</option>
                 </select>
+
                 <input
                     type="text"
                     placeholder="Search..."
-                    className="input max-w-xs"
+                    className="input"
+                    style={{ width: 'auto', minWidth: '200px' }}
                     defaultValue={searchParams.get('search') || ''}
                     onChange={handleSearch}
                 />
+
                 <button onClick={handleExport} className="btn btn-secondary whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
                     Export CSV
                 </button>
             </div>
