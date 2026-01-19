@@ -22,7 +22,7 @@ Non-governmental organisations often run online campaigns where individuals regi
 - **Database**: SQLite
 - **Authentication**: JWT with HTTP-only cookies
 - **Payments**: Razorpay Integration
-- 
+  
 ## Installation
 
 1. **Clone the repository**
@@ -102,7 +102,7 @@ ngo-system/
 4. Complete payment via Razorpay
 
 ### Admin Features
-1. Access the admin dashboard at `/dashboard/admin`
+1. Access the admin dashboard at `/dashboard/admin` using the admin code admin123
 2. View registrations and donations
 3. Use search and filter options
 4. Export data as CSV
