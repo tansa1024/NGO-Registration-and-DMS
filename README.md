@@ -120,3 +120,19 @@ ngo-system/
 | GET | `/api/donations` | Get donations |
 | GET | `/api/admin/export` | Export data as CSV |
 
+## Test Cards for Indian Payments
+
+| Card Network | Card Number | CVV | Expiry Date |
+| :--- | :--- | :--- | :--- |
+| **Mastercard** | `5500 6700 0000 1002` | Random CVV | Any future date |
+| **Visa** | `4100 2800 0000 1007` | Random CVV | Any future date |
+
+## Test Cards for International Payments
+
+| Card Network | Card Number | CVV | Expiry Date |
+| :--- | :--- | :--- | :--- |
+| **Mastercard** | `5421 1393 0609 0628` | Random CVV | Any future date |
+| **Mastercard** | `5105 1051 0510 5100` | Random CVV | Any future date |
+| **Mastercard** | `5104 0600 0000 0008` | Random CVV | Any future date |
+| **Visa** | `4012 8888 8888 1881` | Random CVV | Any future date |
+
